@@ -1,4 +1,6 @@
 # Peoplecounter 
+<img align="right" width="160" src="images/pollerinnen.jpg">
+
 This repository provides hardware specifications and software to get an ultrasonic based people counter run with the following features
 1. Differentiation between incoming and outcoming people
 2. Sending data to TTN Network
