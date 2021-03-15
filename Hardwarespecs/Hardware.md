@@ -1,10 +1,10 @@
-#Ultrasonic Sensor
+# Ultrasonic Sensor
 https://www.katranji.com/tocimages/files/406377-274587.pdf
 
-#Microcontroller
+# Microcontroller
 https://www.fambach.net/ttgo-lora32-oled-v1/
 
-#Connection Cord
+# Connection Cord
 
-#Powerbank
+# Powerbank
 5V...
