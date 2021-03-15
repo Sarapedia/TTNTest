@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Technologiestiftung/HBoxiot/ESP32-Paxcounter-master"
+		},
+		{
+			"name": "TTGOTEST",
+			"path": "../../TTGOTEST"
+		},
+		{
+			"name": "TTNTest",
+			"path": ".."
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"name": "test2",
+			"path": "../../../../../Users/sarareichert/Documents/PlatformIO/Projects/test2"
+		},
+		{
+			"name": "gut",
+			"path": "../../../../../Users/sarareichert/Documents/PlatformIO/Projects/gut"
+		},
+		{
+			"name": "Display",
+			"path": "../../../../../Users/sarareichert/Documents/PlatformIO/Projects/Display"
+		},
+		{
+			"name": "DTMF",
+			"path": "../../../../../Users/sarareichert/Documents/PlatformIO/Projects/DTMF"
+		}
+	],
+	"settings": {}
+}
