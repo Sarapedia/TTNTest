@@ -5,7 +5,6 @@ This repository provides hardware specifications and software to get an ultrason
 1. Differentiation between incoming and outcoming people
 2. Sending data to TTN Network
 3. Based on ultasonic to avoid personal data tracking
-4. Connection to Berlin IoT Data Hub
 
 ## Requirements to use the code
 1. PlatformIO integration with visual studio code https://platformio.org/install/ide?install=vscode
