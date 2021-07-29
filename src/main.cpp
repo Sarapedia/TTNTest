@@ -4,20 +4,20 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
-// OLED
-//define oled_output_on //auskommentieren, falls OLED-Output nicht gewünscht ist
+// OLED to display data available then uncomment the next line 
+//define oled_output_on 
 
 #ifdef oled_output_on
 #include <U8x8lib.h>
-// OLED Pins
+// OLED Pins on TTGo V1 please adapt to your needs on different hardware
 #define OLED_SCL 15 // GPIO 15
 #define OLED_SDA 4 // GPIO 4
 #define OLED_RST 16 // GPIO 16
-// define the display type that we use
+// defines the display type  we use
 U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ OLED_SCL, /* data=*/ OLED_SDA, /* reset=*/ OLED_RST);
 #endif
 
-// LoRa Pins
+// LoRa Pins check out the datasheet of your controller to adapt this pins to your needs. This is for TTGo V1
 #define LoRa_RST 14 // GPIO 14
 #define LoRa_CS 18 // GPIO 18
 #define LoRa_DIO0 26 // GPIO 26
@@ -25,45 +25,18 @@ U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ OLED_SCL, /* data=*/ OLED_SDA
 #define LoRa_DIO2 32 // GPIO 32
 
 
-// LoRaWAN NwkSKey, network session key
-//static const PROGMEM u1_t NWKSKEY[16] = { 0xB6, 0x1B, 0xCE, 0x39, 0xE8, 0x62, 0x06, 0x14, 0xBF, 0x1F, 0x74, 0x6F, 0x63, 0xB4, 0xAA, 0x02 };
-//novembercount vergeben
-//static const PROGMEM u1_t NWKSKEY[16] = { 0x9D, 0xC4, 0xB2, 0x88, 0x3D, 0x7D, 0xB1, 0x28, 0x0B, 0x78, 0x08, 0xBD, 0x80, 0xA5, 0x87, 0x2C };
-//p_zwei vergeben
-static const PROGMEM u1_t NWKSKEY[16] = { 0xC3, 0x60, 0x5C, 0x94, 0x7F, 0xDF, 0xFD, 0x53, 0x3F, 0xDE, 0x18, 0xAA, 0x2A, 0x8C, 0xC5, 0xEA };
-//sensor1
-//static const PROGMEM u1_t NWKSKEY[16] = { 0x18, 0x36, 0x85, 0x14, 0xB4, 0x84, 0xEE, 0x67, 0x8B, 0xF8, 0x17, 0x3E, 0x30, 0xFD, 0x2B, 0x4E };
-//pax4
-//static const PROGMEM u1_t NWKSKEY[16] = { 0x91, 0x9F, 0xC2, 0x92, 0x17, 0x16, 0x94, 0xD5, 0x96, 0xD3, 0xB6, 0xBA, 0xC8, 0x6D, 0x58, 0x72 };
-//arthur
-//static const PROGMEM u1_t NWKSKEY[16] = { 0xA2, 0x27, 0x79, 0x78, 0xF9, 0x17, 0xC7, 0xC4, 0xF2, 0x9C, 0x15, 0x1E, 0x1B, 0xAA, 0x38, 0x22 };
+// LoRaWAN NwkSKey, network session key, fill with your own
+
+static const PROGMEM u1_t NWKSKEY[16] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // LoRaWAN AppSKey, application session key
-//static const u1_t PROGMEM APPSKEY[16] = { 0xE4, 0xC7, 0x92, 0x47, 0xC5, 0x30, 0x1B, 0x25, 0xD1, 0xDF, 0x76, 0x1A, 0xA3, 0x8A, 0x3C, 0x5C }; 
-//novembercount
-//static const u1_t PROGMEM APPSKEY[16] = { 0x9C, 0xF3, 0x12, 0xA3, 0x27, 0xE7, 0x24, 0x46, 0x96, 0x64, 0x1E, 0xF9, 0x1D, 0xD5, 0x37, 0xB0 };
-//p_zwei
-static const u1_t PROGMEM APPSKEY[16] ={ 0x62, 0x83, 0x1E, 0x3D, 0xDF, 0xF9, 0x31, 0xEC, 0x08, 0x03, 0x02, 0xF4, 0xBF, 0x85, 0x5D, 0xBA };
-//sensor1
-//static const u1_t PROGMEM APPSKEY[16] = { 0x2F, 0x31, 0xA3, 0x60, 0xF2, 0xFC, 0xC9, 0x11, 0x6E, 0xF4, 0xF0, 0xF3, 0x1E, 0x6D, 0x68, 0x4B };
-//pax4
-//static const u1_t PROGMEM APPSKEY[16] = { 0xC7, 0xEB, 0x74, 0x52, 0x48, 0xB3, 0x8D, 0x3C, 0x64, 0x23, 0x0D, 0x85, 0x2E, 0x91, 0x38, 0x5E };
-//arthur
-//static const u1_t PROGMEM APPSKEY[16] = { 0xBE, 0x27, 0x2D, 0xCE, 0x68, 0xE9, 0x3A, 0x4C, 0xFB, 0x79, 0x6F, 0xE3, 0x16, 0xAC, 0x9B, 0xFD };
+
+static const u1_t PROGMEM APPSKEY[16] ={ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 
 // LoRaWAN end-device address (DevAddr)
-//static const u4_t DEVADDR = 0x260110A8;//0x26011771 ;
-//novembercount
-//static const u4_t DEVADDR =0x2601394B;
-//p_zwei
-static const u4_t DEVADDR =0x26011B92;
-//sensor1
-//static const u4_t DEVADDR = 0x2601130B;
-//pax4
-//static const u4_t DEVADDR = 0x26011771;
-//arthur
-//static const u4_t DEVADDR = 0x260117AC;
+
+static const u4_t DEVADDR =0x00000000;
 
 // These callbacks are only used in over-the-air activation, so they are
 // left empty here (we cannot leave them out completely unless
@@ -72,15 +45,16 @@ void os_getArtEui (u1_t* buf) { }
 void os_getDevEui (u1_t* buf) { }
 void os_getDevKey (u1_t* buf) { }
 
-//UltraschallNr1
-int u1_trigPin=13;
-int u1_echoPin=12;
+//Ultrasonic Sensor Nr1 connection to Mikrocontroller TTGo V1
+
+int u1_trigPin=13;  //connect Pin 13 with Trigger
+int u1_echoPin=12;  //connect Pin 12 with Echo
 long u1_duration=0;
 long u1_cm=0;
 int u1_counter;
 bool u1_schrankefrei = true;
 
-//UltraschallNr2
+//Ultrasonic Sensor Nr2 connection to Mikrocontroller TTGo V1
 int u2_trigPin=2;
 int u2_echoPin=17;
 long u2_duration=0;
@@ -88,8 +62,8 @@ long cm2=0;
 int u2_counter;
 bool u2_schrankefrei = true;
 
-int volleBreite=300; //in cm
-unsigned long time_to_react = 500; //in ms
+int volleBreite=300; //set physical maximum of your counting distance
+unsigned long time_to_react = 500; // waiting time in ms after interruption of sensor 1 to see interruption at sensor 2
 
 unsigned long lastprint=millis();
 unsigned long abort_time; //gets filled with millis()+time_to_react when 1st sensor reacts
@@ -114,21 +88,22 @@ const lmic_pinmap lmic_pins = {
 };
 void do_send(osjob_t* j){
 
-//Array der Daten
+//put incoming and leaving people in an array
 static uint16_t payloadA[2];
-payloadA[0] = u1_counter;//zum Testen hier feste Werte einsetzen
-payloadA[1] = u2_counter;//
+//for network testing replace the counter variables with an integer.     
+payloadA[0] = u1_counter;
+payloadA[1] = u2_counter;
 // Check if there is not a current TX/RX job running
 if (LMIC.opmode & OP_TXRXPEND) {
 Serial.println(F("OP_TXRXPEND, not sending"));
 } else {
 // Prepare upstream data transmission at the next possible time.
-//Anzahl
+//send data
 sprintf(mydata, "sendep1 = %5u", u2_counter);
 LMIC_setTxData2(1, (xref2u1_t)payloadA, sizeof(payloadA), 0);
 Serial.println(F("Packet queued"));
 // packetNumber++;
-//nach jedem Senden, die counter auf 0 setzen. Menschen pro 10 Minuten die reinrausgehen
+//set counter to zero after sending data. 
 u1_counter=0;
 u2_counter=0;
 }
@@ -200,8 +175,8 @@ break;
 }
 void setup()
 {
-// init packet counter
-sprintf( mydata,"rein= %5u", u1_counter); //aenderung
+// array mydata helps to display data on oled
+sprintf( mydata,"rein= %5u", u1_counter); 
 
 Serial.begin(9600); //115200
 Serial.println(F("Starting System"));
@@ -274,6 +249,7 @@ LMIC_setDrTxpow(DR_SF7, 14);
 // Start job
 do_send(&sendjob);
 
+  
 /*
 #ifdef oled_output_on
 u8x8.setFont(u8x8_font_8x13_1x2_f);
@@ -284,6 +260,7 @@ u8x8.drawString(0, 2, mydata);
 */
 }
 
+//get data ultrasonic 1
 int read_ultra1()
 {
 digitalWrite(u1_trigPin, LOW);
@@ -296,6 +273,7 @@ u1_cm = (u1_duration/2) / 29.1;
 return u1_cm; 
 }
 
+//get data ultrasonic 2
 int read_ultra2()
 { 
 digitalWrite(u2_trigPin, LOW);
@@ -308,11 +286,13 @@ cm2 = (u2_duration/2) / 29.1;
 return cm2;
 }
 
+//count people
 void count()
 { 
 int x=read_ultra2();
 int y=read_ultra1();
 
+//display movement  
 #ifdef oled_output_on
 if ((millis()-lastprint)>500)
 {
@@ -331,13 +311,13 @@ u8x8.drawString(0, 6, abstand2);
 lastprint=millis();
 }
 #endif
-//Bewegung an Schranke 1
+//ultrasonic 1 interrupted
 if (y<=volleBreite && u1_schrankefrei==true)
 {
 Serial.println("bewegung1");
 abort_time=millis()+time_to_react;
-u1_schrankefrei=false; //die Schranke 1 ist besetzt 
-bool bewegung1 = true; //Kontrollbedingung der while schleife
+u1_schrankefrei=false; //ultrasonic 1 is interupted 
+bool bewegung1 = true; 
 while(bewegung1 == true)
 {
 int s2=read_ultra2();
@@ -386,8 +366,8 @@ int s1=read_ultra1();
 if(s1<volleBreite)
 {
 Serial.println("raus");
-u2_counter++; //wenn es wackelt 
-bewegung2 = false; //schleife abbrechen
+u2_counter++; //count a leaving person
+bewegung2 = false; //leave loop
 
 #ifdef oled_output_on
 u8x8.clearDisplay();
@@ -414,7 +394,7 @@ if (x >= volleBreite)
 {
 u2_schrankefrei=true;
 }
-//Serial.println("nix bewegt"); 
+//no counting
 }
 
 void loop()
